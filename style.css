@@ -181,9 +181,16 @@ main {
 }
 .todo-content {
   display: block;
-  padding-top: 2vh;
+  margin-top: 2vh;
   margin-left: 9%;
   width: 80%;
+  max-height: 320px;
+  overflow-y: scroll;
+}
+.todo-content::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+  color: black;
 }
 .todo-content .task {
   display: flex;
@@ -233,6 +240,9 @@ main {
     height: 35px;
     width: 35px;
     font-size: 1.5em;
+  }
+  .small {
+    display: none;
   }
 }
 @keyframes upndown {
