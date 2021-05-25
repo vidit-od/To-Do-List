@@ -34,9 +34,9 @@ window.addEventListener("DOMContentLoaded",function(){
                                     <div class="task">
                                         <p>${list[i].title}</p>
                                         <div class="buttons">
-                                            <button class="expand">*</button>
-                                            <button class="comp">*</button>
-                                            <button class="delete">*</button>
+                                            <button class="expand"><i class="fas fa-angle-double-down"></i></button>
+                                            <button class="comp"><i class="fas fa-check"></i></button>
+                                            <button class="delete"><i class="fas fa-trash-alt"></i></button>
                                         </div>
                                     </div>
                                     <div class ="extra">
@@ -111,9 +111,9 @@ submit.addEventListener("click",function(){
         const new_content=`<div class="task">
                                 <p>${list[i].title}</p>
                                 <div class="buttons">
-                                    <button class="expand}">*</button>
-                                    <button class="comp">*</button>
-                                    <button class="delete">*</button>
+                                    <button class="expand"><i class="fas fa-angle-double-down"></i></button>
+                                    <button class="comp"><i class="fas fa-check"></i></button>
+                                    <button class="delete"><i class="fas fa-trash-alt"></i></button>
                                 </div>
                             </div>`
         const prev_content=content.innerHTML;
@@ -187,6 +187,7 @@ function expand_btn_function(){
     expand_btn_list.forEach(function(expand_btn){
         expand_btn.addEventListener("click",function(){
             expand_btn.parentElement.parentElement.parentElement.children[1].classList.toggle("show-text")
+            expand_btn.classList.toggle("rotate_button")
             expand_btn_list.forEach(function(expa){
                 if (expa.parentElement.parentElement.parentElement.children[1].classList.contains("show-text") && expa!=expand_btn){
                     expa.parentElement.parentElement.parentElement.children[1].classList.toggle("show-text")
@@ -203,6 +204,12 @@ function complet_btn_function(){
             complet_btn.parentElement.children[0].classList.toggle("button_lock")
             complet_btn.parentElement.children[2].classList.toggle("button_lock")
             complet_btn.parentElement.children[1].classList.toggle("button_never_lock")
+            if(complet_btn.parentElement.children[1].classList.contains("button_never_lock")){
+                complet_btn.innerHTML=`<i class="fas fa-unlock"></i>`
+            }
+            else{
+                complet_btn.innerHTML=`<i class="fas fa-check"></i>`
+            }
         })
     })
 }
