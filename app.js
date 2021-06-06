@@ -5,7 +5,9 @@ let item={
     title:null,
     description:null,
     target:null,
+    time_left:null,
 }
+// selectors 
 const page_main=document.querySelector(".todo")
 const page_second=document.querySelector(".todo-desc")
 const input_main = document.querySelector(".todo-input")
@@ -17,12 +19,13 @@ const warning =document.querySelector(".warning")
 const title = document.getElementById("title")
 const submit=document.getElementById("submit")
 
+// buttons list 
 const complete=content.querySelectorAll(".comp")
 let complet_btn_list =[]
 let expand_btn_list =[]
 let delete_btn_list =[]
 
-
+// loadder when web page opens first time 
 window.addEventListener("DOMContentLoaded",function(){
     page_second.classList.add("no")
     page_main.classList.add("yes")
@@ -61,7 +64,7 @@ window.addEventListener("DOMContentLoaded",function(){
         buttons_function();
     }
 })
-
+// the plus button ; to add titles 
 adder.addEventListener("click",function(){
     const display=input_main.value
     if(display==""){
@@ -85,13 +88,30 @@ adder.addEventListener("click",function(){
     }
 })
 
+// done button at page 2
 submit.addEventListener("click",function(){
+    // getting items written on page 2 AND storing them in variables 
     item.title=title.textContent;
     item.description=input_second.value;
     item.target=target.value;
+    // date calculations 
+    let temp_date=new Date();
+    let target_day=item.target;
+    target_day=parseInt(String(target_day).slice(8,))
+    let target_month=item.target;
+    target_month=parseInt(String(target_month).slice(5,7))
+    let target_year=item.target;
+    target_year=parseInt(String(target_year).slice(0,4))
+    const future_date=new Date(target_year,target_month-1,target_day,10,00,0);
+    const present_date=new Date(temp_date.getFullYear(),temp_date.getMonth(),temp_date.getDate(),10,00,0);
+    console.log(future_date);
+    console.log(present_date);
+    console.log(future_date.getTime(), present_date.getTime())
+    item.time_left=Math.floor((future_date.getTime()-present_date.getTime())/(24*60*60*1000))
+    // over
     input_second.value="";
     target.value="";
-
+    // storint these info in local storage 
     if(localStorage.getItem("list")===null){
         list=[]
     }
@@ -100,7 +120,7 @@ submit.addEventListener("click",function(){
     }
     list.push(item);
     localStorage.setItem("list", JSON.stringify(list));
-
+    // transition to move back to first page
     page_second.classList.remove("yes")
     page_second.classList.add("no")
     page_main.classList.remove("no")
@@ -122,11 +142,10 @@ submit.addEventListener("click",function(){
     }
     title.textContent="TO-Do List";
     const length=content.querySelectorAll(".task").length
-    console.log(length)
     list_update()
     buttons_function()
 })
-
+// glitch resolver
 window.addEventListener("transitionend",function(){
     if(page_second.classList.contains("yes") == true){
         if(page_main.classList.contains("yes")==true){
@@ -135,6 +154,7 @@ window.addEventListener("transitionend",function(){
         }
     }
 })
+// functions
 function buttons_function(){
     complet_btn_function();
     expand_btn_function();
@@ -154,9 +174,6 @@ function list_update(){
     for(i=0;i<length;i++){
         delete_btn_list.push(content.querySelectorAll(".task")[i].querySelector(`.delete`))
     }
-    console.log(complet_btn_list)
-    console.log(expand_btn_list)
-    console.log(delete_btn_list)
 }
 function delete_btn_function(){
     delete_btn_list.forEach(function(delete_btn){
