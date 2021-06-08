@@ -141,9 +141,8 @@ submit.addEventListener("click",function(){
         content.innerHTML=inner_html;
     }
     title.textContent="TO-Do List";
-    const length=content.querySelectorAll(".task").length
-    list_update()
-    buttons_function()
+    list_update();
+    buttons_function();
 })
 // glitch resolver
 window.addEventListener("transitionend",function(){
@@ -153,12 +152,13 @@ window.addEventListener("transitionend",function(){
             page_second.classList.remove("yes")
         }
     }
+    buttons_function();
 })
 // functions
 function buttons_function(){
     complet_btn_function();
-    expand_btn_function();
     delete_btn_function();
+    expand_btn_function();
 }
 function list_update(){
     const length=content.querySelectorAll(".task").length
